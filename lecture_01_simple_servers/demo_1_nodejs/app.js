@@ -12,11 +12,11 @@ console.log("There are " + minutes + " minutes in a year")
 function example_function(a, b){
     return a + b;
 }
-
+/*
 let example_function = function(a, b) {
     return a + b;
 }
 
 let example_function = (a, b) => {
     return a + b;
-}
+}*/
