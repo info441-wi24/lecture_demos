@@ -1,19 +1,14 @@
+const fs = require('fs').promises
 const express = require('express')
 const app = express()
 
 app.get("/", (req, res) => {
     console.log("request to '/', sending back html")
     res.type('html')
-    res.send(`
-        <html>
-            <head>
-                <link rel="stylesheet" href="style.css">
-            </head>
-            <body>
-                <h1>Hello World!</h1>
-            </body>
-        </html>
-    `)
+
+    // load and return index.html contents
+    let fileContents = await fs.readFile("index.html")
+    res.send(fileContents)
 })
 
 app.get("/style.css", (req, res) => {
