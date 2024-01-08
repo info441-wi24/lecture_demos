@@ -2,11 +2,9 @@ const fs = require('fs').promises
 const express = require('express')
 const app = express()
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
     console.log("request to '/', sending back html")
     res.type('html')
-
-    // load and return index.html contents
     let fileContents = await fs.readFile("index.html")
     res.send(fileContents)
 })
