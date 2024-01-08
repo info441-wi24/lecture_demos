@@ -9,13 +9,11 @@ app.get("/", async (req, res) => {
     res.send(fileContents)
 })
 
-app.get("/style.css", (req, res) => {
+app.get("/style.css", async (req, res) => {
     console.log("request to '/style.css', sending back css content")
     res.type('css')
-    res.send(`
-        h1{color:red}
-        body{background-color:lightyellow}
-    `)
+    let fileContents = await fs.readFile("style.css")
+    res.send(fileContents)
 })
 
 app.listen(3000, () => {
