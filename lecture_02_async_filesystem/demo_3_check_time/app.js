@@ -23,6 +23,12 @@ app.get("/index.js", async (req, res) => {
     res.send(fileContents)
 })
 
+app.get("/getTime", (req, res) => {
+    let time = new Date()
+    res.type("txt")
+    res.send(time)
+})
+
 app.listen(3000, () => {
     console.log("Example app listening at http://localhost:3000")
 })
