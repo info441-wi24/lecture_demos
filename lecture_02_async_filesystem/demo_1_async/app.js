@@ -12,3 +12,10 @@ async function testAwait(){
 }
 
 testAwait()
+
+async function testAwait2(){
+    console.log("test 2 about to wait")
+    await resolveAfterNSeconds(3)
+    console.log("test 2 finished the 3 second wait")
+}
+testAwait2()
