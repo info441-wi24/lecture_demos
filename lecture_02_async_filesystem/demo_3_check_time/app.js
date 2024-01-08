@@ -16,6 +16,13 @@ app.get("/style.css", async (req, res) => {
     res.send(fileContents)
 })
 
+app.get("/index.js", async (req, res) => {
+    console.log("request to '/index.js', sending back css content")
+    res.type('js')
+    let fileContents = await fs.readFile("index.js")
+    res.send(fileContents)
+})
+
 app.listen(3000, () => {
     console.log("Example app listening at http://localhost:3000")
 })
