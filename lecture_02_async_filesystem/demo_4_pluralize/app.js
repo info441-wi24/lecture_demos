@@ -23,6 +23,13 @@ app.get("/index.js", async (req, res) => {
     res.send(fileContents)
 })
 
+app.get("/favicon.ico", async (req, res) => {
+    console.log("request to '/favicon.ico', sending back css content")
+    res.type('bmp') // can also do a png file
+    let fileContents = await fs.readFile("favicon.ico")
+    res.send(fileContents)
+})
+
 app.get("/getTime", (req, res) => {
     let time = new Date()
     res.type("txt")
