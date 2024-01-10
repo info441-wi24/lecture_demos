@@ -50,7 +50,7 @@ app.get("/api/auditurl", async (req, res) => {
         htmlReturn += "alt text: " + imgTag.attributes.alt + "<br>"
         htmlReturn += "img src: " + imgTag.attributes.src + "<br>"
         let imgUrl = ""
-        if(imgTag.attributes.src.startsWith("http")){
+        if(imgTag.attributes.src && imgTag.attributes.src.startsWith("http")){
             imgUrl = imgTag.attributes.src
         }else{
             imgUrl = inputUrl + "/" + imgTag.attributes.src 
