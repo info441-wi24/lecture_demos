@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs'
+import pluralize from 'pluralize'
 import express from 'express'
 const app = express()
 
@@ -30,10 +31,11 @@ app.get("/favicon.ico", async (req, res) => {
     res.send(fileContents)
 })
 
-app.get("/getTime", (req, res) => {
-    let time = new Date()
+app.get("/api/pluralize", (req, res) => {
+    let inputWord = req.query.word
+    let pluralWord = pluralize(inputWord)
     res.type("txt")
-    res.send(time)
+    res.send(pluralWord)
 })
 
 app.listen(3000, () => {
