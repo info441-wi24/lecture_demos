@@ -1,8 +1,8 @@
 import express from 'express';
 var router = express.Router();
 
-router.get('/', (req, res) =>{
-    res.send("This api v1")
+router.get('/getPterosaurs', (req, res) =>{
+    res.send("{}")
 })
 
 export default router;

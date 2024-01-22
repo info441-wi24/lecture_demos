@@ -3,8 +3,6 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import usersRouter from './routes/users.js';
-import menusRouter from './routes/menus.js';
 import apiV1Router from './routes/api/v1/apiv1.js'
 
 import { fileURLToPath } from 'url';
@@ -21,10 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter);
-app.use('/menus', menusRouter)
 
-// demo of a2 router
+// use api v1 router
 app.use('/api/v1', apiV1Router)
 
 export default app;
