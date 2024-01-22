@@ -7,7 +7,16 @@ router.get('/getPterosaurs', async (req, res) =>{
     const dataString  = await fs.readFile("data/pterosaur.json")
     let pterosaurInfo = JSON.parse(dataString)
     
-    res.json(pterosaurInfo)
+    // filter out any without images
+    let filteredPterosaurInfo = pterosaurInfo.filter(onePterosaur => {
+        if(onePterosaur.img != ""){
+            return true
+        } else{
+            return false
+        }
+    })
+
+    res.json(filteredPterosaurInfo)
 })
 
 export default router;
