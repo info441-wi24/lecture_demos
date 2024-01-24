@@ -3,21 +3,35 @@ import express from 'express';
 var router = express.Router();
 
 router.post('/users', async (req, res) => {
-    console.log(req.body)
+    
+    try{
+        console.log(req.body)
 
-    await fs.writeFile("data/users.json", JSON.stringify(req.body))
+        const newUser = new req.models.User({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            favorite_ice_cream: req.body.favorite_ice_cream
+        })
 
-    res.send("success")
+        await newUser.save()
+
+        res.send("success")
+    }catch(error){
+        console.log("Error saving user to db", error)
+        res.send(500).json({"status": "error", "error": error})
+    }
 })
 
 
 
 router.get('/users', async (req, res) =>{
-    // load data file
-    const dataString  = await fs.readFile("data/users.json")
-    let usersInfo = JSON.parse(dataString)
-
-    res.json(usersInfo)
+    try{
+        let allUsers = await req.models.User.find()
+        res.json(allUsers)
+    }catch(error){
+        console.log("Error getting users from db", error)
+        res.send(500).json({"status": "error", "error": error})
+    }
 })
 
 export default router;
