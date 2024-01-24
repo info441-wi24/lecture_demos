@@ -23,20 +23,10 @@ async function createUser(){
 }
 
 
+async function getUsers(){
+    let response = await fetch("api/v1/users")
+    let usersJson = await response.json();
 
-//TODO: make this getUsers
-async function getPterosaurs(){
-    let response = await fetch("api/v1/getPterosaurs")
-    let PterosaurJson = await response.json();
-
-    let PterosaurHtml = PterosaurJson.map(onePterosaur => {
-        return `
-        <div>
-            <p>${onePterosaur.Genus}</p>
-            <img src="${onePterosaur.img}" />
-        </div>
-        `
-    }).join("")
-
-    document.getElementById("results").innerHTML = PterosaurHtml
+    document.getElementById("results").innerHTML 
+        = JSON.stringify(usersJson)
 }
