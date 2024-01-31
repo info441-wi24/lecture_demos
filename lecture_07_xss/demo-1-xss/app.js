@@ -2,7 +2,7 @@ import * as cheerio from 'cheerio'
 import express from 'express'
 const app = express()
 
-
+// based on answer here: https://stackoverflow.com/questions/40263803/native-javascript-or-es6-way-to-encode-and-decode-html-entities
 const escapeHTML = str => String(str).replace(/[&<>'"]/g, 
   tag => ({
       '&': '&amp;',
