@@ -16,11 +16,13 @@ router.post("/login", function(req, res, next) {
     res.send("wrong login info")
   }
 
+})
+
 router.post("/logout", function(req, res, next) {
   res.send("I should probably do something to log you out")
 })
   
   
-})
+
 
 export default router;
