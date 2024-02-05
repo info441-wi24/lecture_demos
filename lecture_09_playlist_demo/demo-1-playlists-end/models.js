@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose, { model } from "mongoose"
 
 let models = {}
 
@@ -13,5 +13,13 @@ const userSchema = new mongoose.Schema({
 })
 
 models.User = mongoose.model("User", userSchema)
+
+const playlistSchema = new mongoose.Schema({
+    title: String,
+    songs: String,
+    user: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
+})
+
+models.Playlists = mongoose.model("Playlists", playlistSchema)
 
 export default models

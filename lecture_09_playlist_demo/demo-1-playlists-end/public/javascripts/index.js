@@ -25,7 +25,12 @@ async function loadUsers(){
             <strong>Add Band:</strong> <input type="text" id="add_band_text_${usersInfo._id}" />
             <button onclick="addBand('${usersInfo._id}')">Add Band</button><br>
 
-
+            <h3>Add Playlist</h3>
+            <strong>Title:</strong> 
+                <input type="text" id="add_playlist_title_input_${usersInfo._id}" /> <br>
+            <strong>Songs:</strong> 
+                <input type="text" id="add_playlist_songs_input_${usersInfo._id}" /> <br>
+            <button onclick="addPlaylist('${usersInfo._id}')">Add Playlist</button>
         </div>
         `
     }).join("")
@@ -45,7 +50,22 @@ async function addBand(userId){
             band: bandToAdd
         })
     })
+}
 
+async function addPlaylist(userId){
+    //find the playlist info for the correct user section of the page
+    let title = document.getElementById("add_playlist_title_input_" + userId).value
+    let songs = document.getElementById("add_playlist_songs_input_" + userId).value
+
+    await fetch("/api/v1/playlists", {
+        method: "POST",
+        headers: {"Content-Type": 'application/json'},
+        body: JSON.stringify({
+            title: title,
+            songs: songs,
+            userId: userId
+        })
+    })
 }
 
 // async function loadUsers(){
