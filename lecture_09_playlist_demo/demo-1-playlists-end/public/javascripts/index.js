@@ -9,6 +9,25 @@ async function addUser(){
     })
 }
 
+
+async function loadUsers(){
+    document.getElementById("allusersdiv").innerText = "loading..."
+
+    let response = await fetch("/api/v1/users")
+    let usersJson = await response.json()
+
+    let usersHTML = usersJson.map(usersInfo=> {
+        return `
+        <hr>
+        <div>
+            <h3>Username: ${usersInfo.username}</h3>
+        </div>
+        `
+    }).join("")
+
+    document.getElementById("allusersdiv").innerHTML = usersHTML 
+}
+
 // async function loadUsers(){
 //     document.getElementById("allusersdiv").innerText = "loading..."
 
