@@ -1,9 +1,23 @@
 import express from 'express'
 let router = express.Router()
 
-router.post("/", (req, res) => {
-    let username = req.body.username
-    //TODO: Save user to database
+router.post("/", async (req, res) => {
+    try{
+        let username = req.body.username
+        
+        // Save user to database
+        let newUser = new req.models.User({
+            username: username
+        })
+
+        await newUser.save()
+
+        res.json({status: "success"})
+    }catch(err){
+        console.log("error: ", err)
+        res.status(500).json({status: "error"})
+    }
+
 })
 
 export default router
