@@ -21,11 +21,31 @@ async function loadUsers(){
         <hr>
         <div>
             <h3>Username: ${usersInfo.username}</h3>
+            <strong>Favorite Bands:</strong> ${usersInfo.favorite_bands.join(", ")}<br>
+            <strong>Add Band:</strong> <input type="text" id="add_band_text_${usersInfo._id}" />
+            <button onclick="addBand('${usersInfo._id}')">Add Band</button><br>
+
+
         </div>
         `
     }).join("")
 
     document.getElementById("allusersdiv").innerHTML = usersHTML 
+}
+
+async function addBand(userId){
+    //find the band entered into the correct input element (based on the userId)
+    let bandToAdd = document.getElementById("add_band_text_" + userId).value
+
+    await fetch("/api/v1/users/band", {
+        method: "POST",
+        headers: {'Content-Type': "application/json"},
+        body: JSON.stringify({
+            userId: userId,
+            band: bandToAdd
+        })
+    })
+
 }
 
 // async function loadUsers(){

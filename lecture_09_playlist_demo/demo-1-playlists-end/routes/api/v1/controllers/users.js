@@ -31,4 +31,30 @@ router.post("/", async (req, res) => {
 
 })
 
+router.post("/band", async(req, res) => {
+    try{
+        //I need the userId and the band
+        // so I can look up the user and add
+        // the band to their list
+        let userId = req.body.userId
+        let band = req.body.band
+
+        //find the user to update
+        let user = await req.models.User.findById(userId)
+
+        // update with new band (if it wasn't already there)
+        if(!user.favorite_bands.includes(band)){
+            user.favorite_bands.push(band)
+        }
+
+        // save
+        await user.save()
+
+        res.json({status: "success"})
+    }catch(err){
+        console.log("error: ", err)
+        res.status(500).json({status: "error"})
+    }
+})
+
 export default router
