@@ -25,6 +25,11 @@ async function loadUsers(){
             <strong>Add Band:</strong> <input type="text" id="add_band_text_${usersInfo._id}" />
             <button onclick="addBand('${usersInfo._id}')">Add Band</button><br>
 
+            <h3>Playlists</h3>
+            <div id="playlist_div_${usersInfo._id}">
+                Loading playlists...
+            </div>
+
             <h3>Add Playlist</h3>
             <strong>Title:</strong> 
                 <input type="text" id="add_playlist_title_input_${usersInfo._id}" /> <br>
@@ -36,6 +41,29 @@ async function loadUsers(){
     }).join("")
 
     document.getElementById("allusersdiv").innerHTML = usersHTML 
+
+    usersJson.forEach(userInfo => {
+        loadPlaylistsForUser(userInfo._id)
+    })
+}
+
+async function loadPlaylistsForUser(userId){
+    // get playlists for that user
+    let response = await fetch("/api/v1/playlists?userId=" + userId)
+    let playlistJSON = await response.json()
+
+    // add html to the right div for that user
+    let playlistHTML = playlistJSON.map(playalistInfo => {
+        return `
+        <div>
+            <h4>Playlist: ${playalistInfo.title}</h4>
+            <strong>Songs:</strong> ${playalistInfo.songs}
+        </div>
+        `
+    }).join("")
+
+    document.getElementById("playlist_div_" + userId).innerHTML = playlistHTML
+
 }
 
 async function addBand(userId){
