@@ -20,7 +20,10 @@ async function loadUsers(){
         return `
         <hr>
         <div>
-            <h3>Username: ${usersInfo.username}</h3>
+            <h3>
+                Username: ${usersInfo.username}
+                <button onclick="deleteUser('${usersInfo._id}')">Delete</button>
+            </h3>
             <strong>Favorite Bands:</strong> ${usersInfo.favorite_bands.join(", ")}<br>
             <strong>Add Band:</strong> <input type="text" id="add_band_text_${usersInfo._id}" />
             <button onclick="addBand('${usersInfo._id}')">Add Band</button><br>
@@ -91,6 +94,17 @@ async function addPlaylist(userId){
         body: JSON.stringify({
             title: title,
             songs: songs,
+            userId: userId
+        })
+    })
+}
+
+
+async function deleteUser(userId){
+    await fetch("/api/v1/users", {
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
             userId: userId
         })
     })
