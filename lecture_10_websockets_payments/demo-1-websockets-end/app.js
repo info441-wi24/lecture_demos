@@ -6,6 +6,10 @@ enableWs(app)
 
 app.ws('/chatSocket', (ws, res) => {
     console.log("the browser established a ws connection")
+
+    ws.on('message', msg => {
+        console.log("msg: " + msg)
+    })
 })
 
 app.get('/', (req, res) => {
