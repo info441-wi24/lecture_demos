@@ -5,21 +5,25 @@ const app = express()
 enableWs(app)
 
 // track websocket connections
+let socketCounter = 1
 let allSockets = []
 
 app.ws('/chatSocket', (ws, res) => {
-    console.log("the browser established a ws connection")
+    let mySocketNum = socketCounter
+    socketCounter++;
+    console.log("user " + mySocketNum + " connected")
+
 
     // add this ws to the global array tracking all websockets
     allSockets.push(ws)
 
     ws.on('message', chat => {
-        console.log("msg: " + chat)
+        console.log("msg (user " + mySocketNum+ "): " + chat)
         // TODO: I want to send the message I got
         // to all the other browsers connected
         // (using their websockets)
         allSockets.forEach(socket => {
-            socket.send(chat)
+            socket.send(mySocketNum + ": " + chat)
         })
 
     })
