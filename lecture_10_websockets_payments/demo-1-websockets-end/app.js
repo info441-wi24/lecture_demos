@@ -13,13 +13,13 @@ app.ws('/chatSocket', (ws, res) => {
     // add this ws to the global array tracking all websockets
     allSockets.push(ws)
 
-    ws.on('message', msg => {
-        console.log("msg: " + msg)
+    ws.on('message', chat => {
+        console.log("msg: " + chat)
         // TODO: I want to send the message I got
         // to all the other browsers connected
         // (using their websockets)
         allSockets.forEach(socket => {
-            socket.send(msg)
+            socket.send(chat)
         })
 
     })
