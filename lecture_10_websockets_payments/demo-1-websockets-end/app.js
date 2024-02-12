@@ -25,7 +25,11 @@ app.ws('/chatSocket', (ws, res) => {
         allSockets.forEach(socket => {
             socket.send(mySocketNum + ": " + chat)
         })
+    })
 
+    ws.on('close', () => {
+        console.log("user " + mySocketNum + " disconnected.")
+        console.log("I should probably delete them from the array or something")
     })
 })
 
