@@ -8,6 +8,11 @@
             let chatMsg = document.getElementById('textInput').value
             webSocket.send(chatMsg)
         }
+
+        webSocket.onmessage = event => {
+            const msg = event.data
+            document.getElementById("output").innerText += msg + "\n"
+        }
     </script>
 </head>
 <body>
