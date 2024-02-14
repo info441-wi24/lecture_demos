@@ -75,4 +75,35 @@ router.get("/getCart", async(req, res) => {
 
 })
 
+async function calculateOrderAmount(req){
+    let cartInfo = JSON.parse(req.session.cartInfo)
+
+    let combinedCartInfo = await addPricesToCart(cartInfo, req.models)
+
+    let totalCost = combinedCartInfo
+        .map(item => item.price * item.itemCount)
+        .reduce((prev, curr) => prev + curr)
+
+    return totalCost
+}
+
+
+router.post("/create-payment-intent", async (req, res) => {
+    let orderAmount = await calculateOrderAmount(req)
+  
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: orderAmount,
+      currency: "usd",
+      // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
+  
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  });
+
 export default router;
