@@ -11,12 +11,13 @@ import WebAppAuthProvider from 'msal-node-wrapper'
 //  but at the time of making this, the original code depends on outdated version of @azure/msal-node 
 
 const authConfig = {
-    auth: {
-        clientId: "Client/Application ID HERE",
-        authority: "https://login.microsoftonline.com/Enter_the_Tenant_directory_Info_Here",
-        clientSecret: "Client/Application secret here (not 'secret id', but 'secret value')",
-        redirectUri: "/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
-    },
+	auth: {
+		clientId: "02a75b29-5971-427f-86f5-9d28a66c4bfc",
+        authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
+        clientSecret: 																																																	"sKd8Q~VLrWcoSPdBgPdMaKmqvejdex6laQYCZb.0",
+		//redirectUri: "/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+        redirectUri: "/redirect"
+	},
     system: {
         loggerOptions: {
             loggerCallback(loglevel, message, containsPii) {
@@ -39,6 +40,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 var app = express();
+app.enable('trust proxy')
 
 app.use(logger('dev'));
 app.use(express.json());
