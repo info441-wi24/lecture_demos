@@ -40,13 +40,13 @@ const __dirname = dirname(__filename);
 
 var app = express();
 
-// When you deploy to azure, your project will run on http://localhost in a secure container
-// which will then be converted to https requests on the public internet
+// When you deploy to azure, your project will run on http://localhost inside a secure container, and the
+// container will convert the http://localhost requests to "https" requests at your url on the public internet
 //
-// By default, express doesn't trust the https in your site's url if it thinks it is
-// running on http://localhost
-//
-// The code below tells express to trust the https in your site's url, so it will correctly
+// By default, express doesn't trust the https in your site's url if it sees it is running on http://localhost,
+// and will switch any "https"s to "http"s
+// 
+// The code below tells express to trust the "https" in your site's url, so it will correctly
 // use "https" in the redirectUri on your deployed app
 app.enable('trust proxy') 
 
