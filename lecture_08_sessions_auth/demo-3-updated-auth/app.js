@@ -12,10 +12,9 @@ import WebAppAuthProvider from 'msal-node-wrapper'
 
 const authConfig = {
 	auth: {
-		clientId: "02a75b29-5971-427f-86f5-9d28a66c4bfc",
-        authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-        clientSecret: 																																																	"sKd8Q~VLrWcoSPdBgPdMaKmqvejdex6laQYCZb.0",
-		//redirectUri: "/redirect", //note: you can explicitly make this "localhost:3000/redirect" or "examplesite.me/redirect"
+		clientId: "Client ID or Application ID HERE",
+        authority: "https://login.microsoftonline.com/Paste_the_Tenant_directory_ID_Here",
+        clientSecret: "Client or Application secret here (NOT THE 'secret id', but the 'secret value')",
         redirectUri: "/redirect"
 	},
     system: {
@@ -40,7 +39,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 var app = express();
-app.enable('trust proxy')
+
+// When you deploy to azure, your project will run on http://localhost in a secure container
+// which will then be converted to https requests on the public internet
+//
+// By default, express doesn't trust the https in your site's url if it thinks it is
+// running on http://localhost
+//
+// The code below tells express to trust the https in your site's url, so it will correctly
+// use "https" in the redirectUri on your deployed app
+app.enable('trust proxy') 
 
 app.use(logger('dev'));
 app.use(express.json());
