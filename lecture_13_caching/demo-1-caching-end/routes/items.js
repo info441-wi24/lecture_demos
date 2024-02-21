@@ -1,8 +1,24 @@
 import express from 'express';
 var router = express.Router();
 
-router.get("/", async(req, res) => {
+// artificially slow down getting the items from the database
+// to pretend this is a really slow, difficult query, so
+// we can see the benefits of caching
+async function getItemsSlow(req){
     let allItems = await req.models.Item.find()
+
+    // pause for 5 seconds to pretend this was a difficult query
+    let sleepSeconds = 5
+    await new Promise(r => setTimeout(r, sleepSeconds*1000))
+
+    return allItems
+}
+
+router.get("/", async(req, res) => {
+    let allItems = await getItemsSlow(req)
+    
+    // set caching rule for browser
+    res.set('Cache-Control', 'public, max-age=30')
     res.json(allItems)
 })
 
