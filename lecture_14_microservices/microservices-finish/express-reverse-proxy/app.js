@@ -6,6 +6,8 @@ import logger from 'morgan';
 import httpProxyMiddleware from 'http-proxy-middleware'
 const createProxyMiddleware = httpProxyMiddleware.createProxyMiddleware;
 
+import request from 'request'
+
 import usersRouter from './routes/users.js';
 
 import { fileURLToPath } from 'url';
@@ -26,11 +28,18 @@ app.use('/users', usersRouter);
 
 app.use('/api/double', createProxyMiddleware({target: 'http://localhost:5001'}))
 
-app.get('/api/square', (req, res) => {
-    let num = req.query.num
-    let squared = num * num
-    res.send("" + squared)
+const servers = ['http://localhost:6001', 'http://localhost:6002' ];
+let cur_server_index = 0;
+app.use('/api/square', (req, res) => {
+  try {
+  	cur_server_index = (cur_server_index  + 1) % servers.length;
+  	req.pipe(request({ url: servers[cur_server_index] + req.originalUrl })).pipe(res);
+  } catch (error) {
+	console.log("error in /api/square:" + error)
+	res.status(500).json({status: "error", error: error});
+  }
 })
+
 
 // TODO: send request to react server
 app.use('/*', createProxyMiddleware({target: 'http://localhost:4000'}))
