@@ -3,6 +3,9 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
+import httpProxyMiddleware from 'http-proxy-middleware'
+const createProxyMiddleware = httpProxyMiddleware.createProxyMiddleware;
+
 import usersRouter from './routes/users.js';
 
 import { fileURLToPath } from 'url';
@@ -17,7 +20,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 
@@ -32,5 +35,8 @@ app.get('/api/square', (req, res) => {
     let squared = num * num
     res.send("" + squared)
 })
+
+// TODO: send request to react server
+app.use('/*', createProxyMiddleware({target: 'http://localhost:4000'}))
 
 export default app;
